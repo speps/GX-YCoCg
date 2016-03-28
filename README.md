@@ -6,3 +6,5 @@ Implementation of YCoCg encode/decode in Unity 5.
 > [The Compact YCoCg Frame Buffer](http://jcgt.org/published/0001/01/02/),
 > Journal of Computer Graphics Techniques (JCGT),
 > vol. 1, no. 1, 19-35, 30 Sept. 2012. 
+
+**NOTE** : includes PSNR computation shaders (which might be inefficient but very useful)
