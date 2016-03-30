@@ -14,6 +14,15 @@ public class YCoCgCameraScript : MonoBehaviour
 
     private float psnr;
 
+    private enum ScreenshotState
+    {
+        Idle,
+        Start,
+        Taking,
+        Stop,
+    };
+    private ScreenshotState screenshotState = ScreenshotState.Idle;
+
     public enum FilterType
     {
         None,
@@ -58,16 +67,58 @@ public class YCoCgCameraScript : MonoBehaviour
         RenderTexture.ReleaseTemporary(bufferTemp);
     }
 
+    void TakeScreenshot()
+    {
+        filterType = (FilterType)(((int)filterType + 1) % (int)FilterType.Count);
+        string name = "YCoCg-Screenshot-" + filterType.ToString() + ".png";
+        Application.CaptureScreenshot(name);
+        Debug.Log(name);
+        if (filterType == FilterType.None)
+        {
+            screenshotState = ScreenshotState.Stop;
+        }
+    }
+
+    void OnPostRender()
+    {
+        if (screenshotState == ScreenshotState.Stop)
+        {
+            screenshotState = ScreenshotState.Idle;
+        }
+        if (screenshotState == ScreenshotState.Taking)
+        {
+            TakeScreenshot();
+        }
+        if (screenshotState == ScreenshotState.Start)
+        {
+            filterType = FilterType.None;
+            screenshotState = ScreenshotState.Taking;
+        }
+    }
+
     void OnGUI()
     {
-        GUILayout.BeginHorizontal();
-        if (GUILayout.Button("<"))
+        if (screenshotState == ScreenshotState.Idle)
         {
-            filterType = (FilterType)(((int)filterType + (int)FilterType.Count - 1) % (int)FilterType.Count);
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Screenshot"))
+            {
+                screenshotState = ScreenshotState.Start;
+            }
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
         }
-        if (GUILayout.Button(">"))
+        GUILayout.BeginHorizontal();
+        if (screenshotState == ScreenshotState.Idle)
         {
-            filterType = (FilterType)(((int)filterType + 1) % (int)FilterType.Count);
+            if (GUILayout.Button("<"))
+            {
+                filterType = (FilterType)(((int)filterType + (int)FilterType.Count - 1) % (int)FilterType.Count);
+            }
+            if (GUILayout.Button(">"))
+            {
+                filterType = (FilterType)(((int)filterType + 1) % (int)FilterType.Count);
+            }
         }
         GUILayout.Box(filterType.ToString());
         GUILayout.FlexibleSpace();
