@@ -36,7 +36,7 @@ public class YCoCgCameraScript : MonoBehaviour
     {
         var camera = GetComponent<Camera>();
 
-        var bufferTemp = RenderTexture.GetTemporary(camera.pixelWidth, camera.pixelHeight, 0, RenderTextureFormat.ARGB32);
+        var bufferTemp = RenderTexture.GetTemporary(camera.pixelWidth, camera.pixelHeight, 0, RenderTextureFormat.ARGBFloat);
         if (filterType == FilterType.None)
         {
             Graphics.Blit(source, bufferTemp);

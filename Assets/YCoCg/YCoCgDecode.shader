@@ -23,8 +23,6 @@
 
 			float3 YCoCg2RGB(float3 c)
 			{
-				c.y -= 0.5;
-				c.z -= 0.5;
 				return float3(c.r + c.g - c.b, c.r + c.b, c.r - c.g - c.b);
 			}
 

@@ -21,7 +21,7 @@
 
 			float3 RGB2YCoCg(float3 c)
 			{
-				return float3( 0.25*c.r+0.5*c.g+0.25*c.b, 0.5*c.r-0.5*c.b +0.5, -0.25*c.r+0.5*c.g-0.25*c.b +0.5);
+				return float3( 0.25*c.r+0.5*c.g+0.25*c.b, 0.5*c.r-0.5*c.b, -0.25*c.r+0.5*c.g-0.25*c.b);
 			}
 
 			float4 frag(v2f_img i) : SV_Target
