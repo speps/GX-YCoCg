@@ -71,7 +71,7 @@ public class YCoCgCameraScript : MonoBehaviour
     {
         filterType = (FilterType)(((int)filterType + 1) % (int)FilterType.Count);
         string name = "YCoCg-Screenshot-" + filterType.ToString() + ".png";
-        Application.CaptureScreenshot(name);
+        ScreenCapture.CaptureScreenshot(name);
         Debug.Log(name);
         if (filterType == FilterType.None)
         {
